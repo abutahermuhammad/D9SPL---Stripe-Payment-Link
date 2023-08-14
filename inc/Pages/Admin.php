@@ -12,22 +12,9 @@ class Admin
 {
     public function register()
     {
-        // Enqueue styles and scripts
-        // add_action('admin_enqueue_scripts', [$this, 'enqueue']);
-
-        // Register custom adimin pages
         add_action('admin_menu', [$this, 'add_admin_pages']);
-
-        // Add settings link to plugin
-        // add_filter("plugin_action_links_$this->plugin", [$this, 'settings_link']);
     }
 
-    public function settings_link($links)
-    {
-        $settings_link = '<a href="admin.php?page=d9spl-settings">Settings</a>';
-        array_push($links, $settings_link);
-        return $links;
-    }
 
     public function add_admin_pages()
     {
@@ -72,5 +59,6 @@ class Admin
     public function settings_index()
     {
         require_once D9SPL_PLUGIN_DIR . '/templates/settings.php';
+        settings_page_content();
     }
 }
