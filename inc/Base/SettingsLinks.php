@@ -14,7 +14,7 @@ class SettingsLinks
 
     public function register()
     {
-        add_filter("plugin_action_links_$this->plugin" . D9SPL_PLUGIN_NAME, array($this, "settings_link"));
+        add_filter("plugin_action_links_" . D9SPL_PLUGIN_NAME, array($this, "settings_link"));
     }
 
     public function settings_link($links)

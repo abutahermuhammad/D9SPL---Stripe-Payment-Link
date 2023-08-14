@@ -36,6 +36,37 @@ define('D9SPL_PLUGIN_NAME', trim(dirname(D9SPL_PLUGIN_BASENAME), '/'));
 define('D9SPL_PLUGIN_DIR', untrailingslashit(dirname(D9SPL_PLUGIN)));
 
 
+/* **************************************** */
+/* Plugin activation and deactivation hooks */
+/* **************************************** */
+
+use Inc\Base\Activate;
+use Inc\Base\Deactivate;
+
+/**
+ * The code that runs during plugin activation
+ * @return void
+ * @since 1.0.0
+ */
+function activate_d9spl_plugin()
+{
+    Activate::activate();
+}
+
+/**
+ * The code that runs during plugin deactivation
+ * @return void
+ * @since 1.0.0
+ */
+function deactivate_d9spl_plugin()
+{
+    Deactivate::deactivate();
+}
+
+register_activation_hook(D9SPL_PLUGIN, "activate_d9spl_plugin");
+register_deactivation_hook(D9SPL_PLUGIN, "deactivate_d9spl_plugin");
+
+
 // Check if the Inc\Init class exists and register services
 if (class_exists('Inc\\Init')) {
     Inc\Init::register_services();
