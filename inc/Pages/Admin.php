@@ -6,6 +6,11 @@
 
 namespace Inc\Pages;
 
+use \Inc\Init;
+use \Inc\Pages\Settings;
+use \Inc\Pages\NewLink;
+use \Inc\Pages\PaymentLinks;
+
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 class Admin
@@ -14,7 +19,6 @@ class Admin
     {
         add_action('admin_menu', [$this, 'add_admin_pages']);
     }
-
 
     public function add_admin_pages()
     {
@@ -42,23 +46,30 @@ class Admin
             'Settings',
             'manage_options',
             'd9spl-settings',
-            [$this, 'settings_index']
+            [$this, 'render_settings_view']
         );
     }
 
     public function link_index()
     {
-        require_once D9SPL_PLUGIN_DIR . '/templates/links.php';
+        $new_link = Init::get_instance(PaymentLinks::class);
+
+        $new_link->render_view();
+
+        // require_once D9SPL_PLUGIN_DIR . '/templates/links.php';
     }
 
     public function link_add_new()
     {
-        require_once D9SPL_PLUGIN_DIR . '/templates/add-new.php';
+        $new_link = Init::get_instance(NewLink::class);
+
+        $new_link->render_view();
     }
 
-    public function settings_index()
+    public function render_settings_view()
     {
-        require_once D9SPL_PLUGIN_DIR . '/templates/settings.php';
-        settings_page_content();
+        $settings = Init::get_instance(Settings::class);
+
+        $settings->render_view();
     }
 }
