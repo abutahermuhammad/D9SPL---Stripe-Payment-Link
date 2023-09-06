@@ -29,7 +29,7 @@ if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
 // Define constants for the plugin
 define('D9SPL_VERSION', '1.0');
 define('D9SPL_REQUIRED_WP_VERSION', '6.0');
-define('D9SPL_TEXT_DOMAIN', 'd9-stripe-payment-link');
+define('D9SPL_TEXT_DOMAIN', 'd9spl');
 define('D9SPL_PLUGIN', __FILE__);
 define('D9SPL_PLUGIN_BASENAME', plugin_basename(D9SPL_PLUGIN));
 define('D9SPL_PLUGIN_NAME', trim(dirname(D9SPL_PLUGIN_BASENAME), '/'));

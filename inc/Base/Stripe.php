@@ -11,6 +11,7 @@ class Stripe
     private $stripe;
     private $currency;
 
+
     function __construct()
     {
         // Initialize Stripe client
@@ -19,6 +20,7 @@ class Stripe
         $this->stripe = new \Stripe\StripeClient(get_option('d9_settings_key'));
         $this->currency = get_option('d9_settings_currency');
     }
+
 
     function create_product($name, $amount)
     {
@@ -39,10 +41,12 @@ class Stripe
         ]);
     }
 
+
     function delete_product($id)
     {
         return $this->stripe->products->delete($id);
     }
+
 
     function create_payment_link($price_id, $quantity = 1)
     {
@@ -55,6 +59,7 @@ class Stripe
             ],
         ]);
     }
+
 
     function get_payment_links($limit = 20, $pading = 0)
     {

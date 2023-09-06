@@ -131,8 +131,6 @@ class NewLink
             // Data retrieval from Stripe was not successful, handle the error accordingly
             $this->message['error'][] = '<p class="notice notice-error">Error: Unable to create product and payment link.</p>';
         }
-
-        // $this->message['success'][] = sprintf('<p class="notice notice-success">Product created successfully. Here is your payment link: <a href="%s">%s</a></p>', esc_url($payment_link), esc_url($payment_link));
     }
 
     /**

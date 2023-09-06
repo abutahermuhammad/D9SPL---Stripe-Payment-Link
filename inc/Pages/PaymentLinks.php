@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Settings class for D9SPL plugin.
+ *
+ * @package D9SPL
+ */
+
 namespace Inc\Pages;
 
 class PaymentLinks

@@ -17,7 +17,6 @@ class Activate
         // Call the activation function to check WordPress version and set the plugin version
         self::d9spl_activate_plugin();
 
-
         // Create the payment table when the plugin is activated
         self::create_payment_table();
     }

@@ -20,7 +20,6 @@ final class Init
         return [
             Pages\Admin::class,
             Base\Enqueue::class,
-            Base\SettingsLinks::class,
             Pages\Settings::class,
             Pages\NewLink::class,
             Pages\PaymentLinks::class,

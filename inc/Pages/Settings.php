@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * Settings class for D9SPL plugin.
+ *
  * @package D9SPL
  */
 
@@ -8,12 +10,40 @@ namespace Inc\Pages;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
+/**
+ * Settings class to handle plugin settings and options.
+ */
 class Settings
 {
+    /**
+     * An array to hold plugin settings.
+     *
+     * @var array
+     */
     public $settings = [];
+
+    /**
+     * An array to hold plugin sections.
+     *
+     * @var array
+     */
     public $sections = [];
+
+    /**
+     * An array to hold plugin fields.
+     *
+     * @var array
+     */
     public $fields = [];
 
+
+    /**
+     * Register settings, sections, and fields.
+     *
+     * @return void
+     *
+     * @since 1.0.0
+     */
     public function register()
     {
         $this->setSettings();
@@ -23,8 +53,13 @@ class Settings
         add_action('admin_init', [$this, 'register_custom_settings']);
     }
 
+
     /**
-     * Registering custom settings options. like: settings, section, fileds.
+     * Register custom settings, sections, and fields.
+     *
+     * @return void
+     *
+     * @since 1.0.0
      */
     public function register_custom_settings()
     {
@@ -44,8 +79,13 @@ class Settings
         }
     }
 
+
     /**
-     * Adding settins options to the `settings` array.
+     * Set plugin settings options.
+     *
+     * @return void
+     *
+     * @since 1.0.0
      */
     public function setSettings()
     {
@@ -63,8 +103,13 @@ class Settings
         ];
     }
 
+
     /**
-     * Adding an icon for the `settings` page
+     * Set plugin sections.
+     *
+     * @return void
+     *
+     * @since 1.0.0
      */
     public function setSections()
     {
@@ -78,8 +123,13 @@ class Settings
         ];
     }
 
+
     /**
-     * Adding settings fields
+     * Set plugin setting fields.
+     *
+     * @return void
+     *
+     * @since 1.0.0
      */
     public function setFields()
     {
@@ -92,7 +142,7 @@ class Settings
                 "section" => "d9spl_settings_general_section",
                 "args" => [
                     "label_for" => "d9_settings_key",
-                    "description" => esc_html("Enter your stripe account secret key. To find the secret key follow this official documentation at https://stripe.com/docs/keys", "my-plugin-textdomain")
+                    "description" => esc_html("Enter your stripe account secret key. To find the secret key follow this official documentation at https://stripe.com/docs/keys", D9SPL_TEXT_DOMAIN)
                 ]
             ],
             [
@@ -103,13 +153,21 @@ class Settings
                 "section" => "d9spl_settings_general_section",
                 "args" => [
                     "label_for" => "d9_settings_currency",
-                    "description" => __("Select the default currency.", "my-plugin-textdomain")
+                    "description" => __("Select the default currency.", D9SPL_TEXT_DOMAIN)
                 ]
             ]
         ];
     }
 
-    // Senitzing `Sripe key`
+
+    /**
+     * Senitzing `Sripe key`
+     * 
+     * @param string $input
+     * @return string
+     * 
+     * @since 1.0.0
+     */
     public function sanitizeStripeKey($input)
     {
         $output = sanitize_text_field($input);
@@ -118,6 +176,11 @@ class Settings
 
     /**
      * Senitizing `currenc`.
+     * 
+     * @param string $input
+     * @return string
+     * 
+     * @since 1.0.0
      */
     public function sanitizeCurrency($input)
     {
@@ -128,6 +191,7 @@ class Settings
     public function d9spl_settings_general_section_cb()
     {
     }
+
 
     public function d9spl_settings_key_render_view($args)
     {

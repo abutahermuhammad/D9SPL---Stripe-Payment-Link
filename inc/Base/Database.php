@@ -92,16 +92,6 @@ class Database
         );
     }
 
-    /**
-     * This method will retrive all the records in the table.
-     */
-    public function get_records($limit = 20, $offset = 0)
-    {
-        global $wpdb;
-
-        $sql = $wpdb->prepare("SELECT * FROM $this->table_name ORDER BY id DESC LIMIT %d OFFSET %d", $limit, $offset);
-        return $wpdb->get_results($sql, ARRAY_A);
-    }
 
     /**
      * This metod will remove the table with all it's records.

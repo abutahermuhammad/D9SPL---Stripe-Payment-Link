@@ -72,8 +72,6 @@ class Admin
         $new_link = Init::get_instance(PaymentLinks::class);
 
         $new_link->render_view();
-
-        // require_once D9SPL_PLUGIN_DIR . '/templates/links.php';
     }
 
 
