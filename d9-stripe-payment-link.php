@@ -52,6 +52,8 @@ function activate_d9spl_plugin()
 {
     Activate::activate();
 }
+register_activation_hook(D9SPL_PLUGIN, "activate_d9spl_plugin");
+
 
 /**
  * The code that runs during plugin deactivation
@@ -62,8 +64,6 @@ function deactivate_d9spl_plugin()
 {
     Deactivate::deactivate();
 }
-
-register_activation_hook(D9SPL_PLUGIN, "activate_d9spl_plugin");
 register_deactivation_hook(D9SPL_PLUGIN, "deactivate_d9spl_plugin");
 
 

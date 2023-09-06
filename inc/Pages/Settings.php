@@ -23,6 +23,9 @@ class Settings
         add_action('admin_init', [$this, 'register_custom_settings']);
     }
 
+    /**
+     * Registering custom settings options. like: settings, section, fileds.
+     */
     public function register_custom_settings()
     {
         // Register settings
@@ -41,6 +44,9 @@ class Settings
         }
     }
 
+    /**
+     * Adding settins options to the `settings` array.
+     */
     public function setSettings()
     {
         $this->settings = [
@@ -57,6 +63,9 @@ class Settings
         ];
     }
 
+    /**
+     * Adding an icon for the `settings` page
+     */
     public function setSections()
     {
         $this->sections = [
@@ -69,13 +78,16 @@ class Settings
         ];
     }
 
+    /**
+     * Adding settings fields
+     */
     public function setFields()
     {
         $this->fields = [
             [
                 "id" => "d9_settings_key",
                 "title" => "Stripe Secret Key",
-                "callback" => [$this, "d9spl_settings_key_cb"],
+                "callback" => [$this, "d9spl_settings_key_render_view"],
                 "page" => "d9spl-settings",
                 "section" => "d9spl_settings_general_section",
                 "args" => [
@@ -86,7 +98,7 @@ class Settings
             [
                 "id" => "d9_settings_currency",
                 "title" => "Default Currency",
-                "callback" => [$this, "d9spl_settings_currency_cb"],
+                "callback" => [$this, "d9spl_settings_currency_render_view"],
                 "page" => "d9spl-settings",
                 "section" => "d9spl_settings_general_section",
                 "args" => [
@@ -97,12 +109,16 @@ class Settings
         ];
     }
 
+    // Senitzing `Sripe key`
     public function sanitizeStripeKey($input)
     {
         $output = sanitize_text_field($input);
         return $output;
     }
 
+    /**
+     * Senitizing `currenc`.
+     */
     public function sanitizeCurrency($input)
     {
         $output = sanitize_text_field($input);
@@ -113,18 +129,23 @@ class Settings
     {
     }
 
-    public function d9spl_settings_key_cb($args)
+    public function d9spl_settings_key_render_view($args)
     {
         $value = get_option('d9_settings_key');
         echo '<input class="regular-text" type="password" name="d9_settings_key" id="d9_settings_key" value="' . esc_attr($value) . '" ><p class="description">' . esc_html($args['description']) . '</p>';
     }
 
-    public function d9spl_settings_currency_cb($args)
+    public function d9spl_settings_currency_render_view($args)
     {
         $value = get_option('d9_settings_currency');
         echo '<select name="d9_settings_currency" id="d9_settings_currency">
         <option value="usd"' . selected($value, 'usd', false) . '>USD</option>
         <option value="gbp"' . selected($value, 'gbp', false) . '>GBP</option>
-    </select><p class="description">' . esc_html($args['description']) . '</p>';
+        </select><p class="description">' . esc_html($args['description']) . '</p>';
+    }
+
+    public function render_view()
+    {
+        require_once D9SPL_PLUGIN_DIR . '/templates/settings.php';
     }
 }

@@ -15,11 +15,22 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 class Admin
 {
+    /**
+     * Register admin menu pages.
+     * 
+     * @since 1.0.0
+     */
     public function register()
     {
         add_action('admin_menu', [$this, 'add_admin_pages']);
     }
 
+
+    /**
+     * Add admin menu pages.
+     * 
+     * @since 1.0.0
+     */
     public function add_admin_pages()
     {
         add_menu_page(
@@ -50,6 +61,12 @@ class Admin
         );
     }
 
+
+    /**
+     * Render the Payment Links index page.
+     * 
+     * @since 1.0.0
+     */
     public function link_index()
     {
         $new_link = Init::get_instance(PaymentLinks::class);
@@ -59,6 +76,12 @@ class Admin
         // require_once D9SPL_PLUGIN_DIR . '/templates/links.php';
     }
 
+
+    /**
+     * Render the Add New Link page.
+     * 
+     * @since 1.0.0
+     */
     public function link_add_new()
     {
         $new_link = Init::get_instance(NewLink::class);
@@ -66,6 +89,12 @@ class Admin
         $new_link->render_view();
     }
 
+
+    /**
+     * Render the Settings page.
+     * 
+     * @since 1.0.0
+     */
     public function render_settings_view()
     {
         $settings = Init::get_instance(Settings::class);

@@ -8,6 +8,8 @@ namespace Inc;
 
 final class Init
 {
+    private static $instances = array();
+
     /**
      * Store all the classes inside an array
      * @return array Full list of classes
@@ -19,7 +21,9 @@ final class Init
             Pages\Admin::class,
             Base\Enqueue::class,
             Base\SettingsLinks::class,
-            Pages\Settings::class
+            Pages\Settings::class,
+            Pages\NewLink::class,
+            Pages\PaymentLinks::class,
         ];
     }
 
@@ -32,23 +36,27 @@ final class Init
     public static function register_services()
     {
         foreach (self::get_services() as $class) {
-            $service = self::instantiate($class);
+            $service = self::get_instance($class);
+
             if (method_exists($service, 'register')) {
                 $service->register();
             }
         }
     }
 
+
     /**
-     * Initialize the class
+     * Get a single instance of the class
      * @param  class $class    class from the services array
-     * @return class instance  new instance of the class
+     * @return class instance  instance of the class
      * @since 1.0.0
      */
-    private static function instantiate($class)
+    public static function get_instance($class)
     {
-        $service = new $class();
+        if (!isset(self::$instances[$class])) {
+            self::$instances[$class] = new $class();
+        }
 
-        return $service;
+        return self::$instances[$class];
     }
 }
