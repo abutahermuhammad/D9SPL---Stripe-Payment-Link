@@ -22,7 +22,7 @@ class NewLink
     {
         $this->email = isset($_POST['d9_form_email']) ? $_POST['d9_form_email'] : '';
         $this->product_name = isset($_POST['d9_form_product_name']) ? $_POST['d9_form_product_name'] : '';
-        $this->price = isset($_POST['d9_form_price']) ? $_POST['d9_form_price'] : 0;
+        $this->price = isset($_POST['d9_form_price']) ? $_POST['d9_form_price'] * 100 : 0;
     }
 
     public function register()
@@ -118,16 +118,15 @@ class NewLink
                 'link' => $payment_link['url'],
             ]);
 
-            // $redirect_to = admin_url('/admin.php?page=d9spl-add-new&inserted=true');
-            // wp_redirect($redirect_to);
             // Display a success message to the user
-            $success_message = sprintf(
+            $this->message['success'][] = sprintf(
                 '<p class="notice notice-success">Product created successfully. Here is your payment link: <a href="%s">%s</a></p>',
                 esc_url($payment_link['url']),
                 esc_url($payment_link['url'])
             );
 
-            $this->message['success'][] = $success_message;
+            $redirect_to = admin_url('/admin.php?page=d9spl-add-new&inserted=true');
+            wp_redirect($redirect_to);
         } else {
             // Data retrieval from Stripe was not successful, handle the error accordingly
             $this->message['error'][] = '<p class="notice notice-error">Error: Unable to create product and payment link.</p>';

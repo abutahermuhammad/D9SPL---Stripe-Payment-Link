@@ -3,19 +3,23 @@
 /**
  * @package D9SPL
  */
-
-// $message = '';
-
-
 ?>
+
 <div class="wrap">
     <h1><?php _e('Generate Stripe Payment Link', 'my-plugin-textdomain'); ?></h1>
 
+    <?php var_dump($this->message); ?>
     <?php
-    var_dump($message);
+
     // Check if there's a success message to display
-    if (!empty($message)) {
-        echo '<div class="notice success"><p>' . esc_html($message) . '</p></div>';
+    if (!empty($this->message)) {
+        if (!empty($this->message['success'])) {
+            echo '<div class="notice success"><p>' . esc_html($this->message['success']) . '</p></div>';
+        }
+
+        if (!empty($this->message['error'])) {
+            echo '<div class="notice success"><p>' . esc_html($this->message['success']) . '</p></div>';
+        }
     }
     ?>
 
