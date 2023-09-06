@@ -43,8 +43,8 @@ class PaymentLinks
         $defaults = [
             'limit' => 20,
             'offset' => 0,
-            'orderby' => 'id',
-            'order' => 'ASC',
+            'orderby' => 'created_at',
+            'order' => 'DESC',
         ];
 
         // Merge provided args with defaults

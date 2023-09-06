@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @package D9SPL
+ */
+
 namespace Inc\Base;
 
 use Inc\Pages\PaymentLinks;
@@ -11,15 +15,26 @@ if (!class_exists('WP_List_Table')) {
 
 class LinksTable extends \WP_List_Table
 {
+    /**
+     * Initialize the LinksTable class.
+     *
+     * @since 1.0.0
+     */
     function __construct()
     {
         parent::__construct([
-            'singuler' => 'links',
-            'plural' => 'link',
+            'singular' => 'link',
+            'plural' => 'links',
             'ajax' => false
         ]);
     }
 
+    /**
+     * Define the columns for the table.
+     *
+     * @return array
+     * @since 1.0.0
+     */
     public function get_columns()
     {
         return [
@@ -34,9 +49,10 @@ class LinksTable extends \WP_List_Table
     }
 
     /**
-     * Get sortable columns
+     * Define sortable columns.
      *
      * @return array
+     * @since 1.0.0
      */
     function get_sortable_columns()
     {
@@ -51,25 +67,35 @@ class LinksTable extends \WP_List_Table
         return $sortable_columns;
     }
 
+    /**
+     * Default column rendering.
+     *
+     * @param object $item
+     * @param string $column_name
+     * @return mixed|string
+     * @since 1.0.0
+     */
     protected function column_default($item, $column_name)
     {
         switch ($column_name) {
+            case 'created_at':
+                return wp_date(get_option('date_format'), strtotime($item->created_at));
             case 'created_by':
                 return isset($item->created_by) ? get_user_by('id', $item->created_by)->display_name : "";
             case 'amount':
-                return isset($item->amount) ? $item->amount / 100 : 0;
+                return isset($item->amount) ? $item->amount / 100 : "---";
 
             default:
-                return isset($item->$column_name) ? $item->$column_name : "";
+                return isset($item->$column_name) ? $item->$column_name : "---";
         }
     }
 
     /**
-     * Render the "name" column
+     * Render the "Link" column.
      *
-     * @param  object $item
-     *
+     * @param object $item
      * @return string
+     * @since 1.0.0
      */
     public function column_link($item)
     {
@@ -87,11 +113,11 @@ class LinksTable extends \WP_List_Table
     }
 
     /**
-     * Render the "cb" column
+     * Render the "cb" column.
      *
-     * @param  object $item
-     *
+     * @param object $item
      * @return string
+     * @since 1.0.0
      */
     protected function column_cb($item)
     {
@@ -101,6 +127,11 @@ class LinksTable extends \WP_List_Table
         );
     }
 
+    /**
+     * Prepare the items for the table.
+     *
+     * @since 1.0.0
+     */
     public function prepare_items()
     {
         $links = \Inc\Init::get_instance(\Inc\Pages\PaymentLinks::class);
@@ -110,7 +141,7 @@ class LinksTable extends \WP_List_Table
 
         $this->_column_headers = [$columns, $hidden, $sortable];
 
-        $per_page     = 5;
+        $per_page     = 10;
         $current_page = $this->get_pagenum();
         $offset       = ($current_page - 1) * $per_page;
 
@@ -124,10 +155,9 @@ class LinksTable extends \WP_List_Table
             $args['order']   = $_REQUEST['order'];
         }
 
-
         $this->items = $links->get_links($args);
 
-        $this->set_pegination_args([
+        $this->set_pagination_args([
             'total_items' => $links->get_total_items_count(),
             'per_page' => $per_page,
         ]);
