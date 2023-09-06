@@ -8,6 +8,8 @@
 <div class="wrap">
     <h1><?php _e('Generate Stripe Payment Link', D9SPL_TEXT_DOMAIN); ?></h1>
 
+    <?php settings_errors(); ?>
+
     <?php
     if (!empty($this->message)) {
         if (!empty($this->message['success'])) {

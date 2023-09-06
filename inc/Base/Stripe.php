@@ -6,22 +6,42 @@
 
 namespace Inc\Base;
 
+
+
 class Stripe
 {
-    private $stripe;
+    private $key;
     private $currency;
+    private $stripe;
 
 
     function __construct()
     {
-        // Initialize Stripe client
-        \Stripe\Stripe::setApiKey(get_option('d9_settings_key'));
+        $this->validate_settings(); // Call the validate_settings method here
 
-        $this->stripe = new \Stripe\StripeClient(get_option('d9_settings_key'));
-        $this->currency = get_option('d9_settings_currency');
+        // Initialize Stripe client after successful validation
+        \Stripe\Stripe::setApiKey($this->key);
+        $this->stripe = new \Stripe\StripeClient($this->key);
     }
 
 
+    private function validate_settings()
+    {
+        $this->key = get_option('d9_settings_key');
+        $this->currency = get_option('d9_settings_currency');
+
+        if (empty($this->key)) {
+            // Handle validation failure, e.g., display an error message
+            // or log the error.
+            wp_die('Stripe Secret Key is missing. Please configure it in your settings.');
+        }
+
+        if (empty($this->currency)) {
+            // Handle validation failure, e.g., display an error message
+            // or log the error.
+            wp_die('Default Currency is missing. Please configure it in your settings.');
+        }
+    }
     function create_product($name, $amount)
     {
         return $this->stripe->products->create([
